@@ -8,7 +8,7 @@
     <string name="single_choice_dialog">单选项列表对话框</string>
     <string name="multi_choice_dialog">多选项列表对话框</string>
     <string name="custom_adapter_dialog">自定义Adapter对话框</string>
-    <string name="custom_view_dialog">自定义View对话框</string>
+    <string name="custom_view_dialog">请登录</string>
 
     <!-- 对话框所需要的字符串资源-->
     <string name="dialog_message">这里是内容区域</string>

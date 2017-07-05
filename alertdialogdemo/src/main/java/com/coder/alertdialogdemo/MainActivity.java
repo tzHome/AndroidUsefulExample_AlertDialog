@@ -4,7 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -12,55 +12,35 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class MainActivity extends ActionBarActivity implements View.OnClickListener{
-
-    private Button simpleDiaog;
-    private Button simpleListDiaog;
-    private Button singleChoiceDiaog;
-    private Button multiChoiceDiaog;
-    private Button customAdateprDiaog;
-    private Button customViewDiaog;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private AlertDialog.Builder builder;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //ÊµÀı»¯¿Ø¼ş
-        simpleDiaog= (Button) findViewById(R.id.btn_simple_dialog);
-        simpleListDiaog= (Button) findViewById(R.id.btn_simple_list_dialog);
-        singleChoiceDiaog= (Button) findViewById(R.id.btn_single_choice_dialog);
-        multiChoiceDiaog= (Button) findViewById(R.id.btn_multi_choice_dialog);
-        customAdateprDiaog= (Button) findViewById(R.id.btn_custom_adapter_dialog);
-        customViewDiaog= (Button) findViewById(R.id.btn_custom_view_dialog);
+        //å®ä¾‹åŒ–æ§ä»¶ å¹¶ç›‘å¬
+        findViewById(R.id.btn_simple_dialog).setOnClickListener(this);
+        findViewById(R.id.btn_simple_list_dialog).setOnClickListener(this);
+        findViewById(R.id.btn_single_choice_dialog).setOnClickListener(this);
+        findViewById(R.id.btn_multi_choice_dialog).setOnClickListener(this);
+        findViewById(R.id.btn_custom_adapter_dialog).setOnClickListener(this);
+        findViewById(R.id.btn_custom_view_dialog).setOnClickListener(this);
 
-        
-        //¼àÌı
-        simpleDiaog.setOnClickListener(this);
-        simpleListDiaog.setOnClickListener(this);
-        singleChoiceDiaog.setOnClickListener(this);
-        multiChoiceDiaog.setOnClickListener(this);
-        customAdateprDiaog.setOnClickListener(this);
-        customViewDiaog.setOnClickListener(this);
     }
 
-    //µã»÷button£¬µ¯³ö¶ÔÓ¦¶Ô»°¿ò
+    //ç‚¹å‡»buttonï¼Œå¼¹å‡ºå¯¹åº”å¯¹è¯æ¡†
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btn_simple_dialog:
                 showSimpleDialog(view);
                 break;
@@ -83,18 +63,19 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     }
 
-    //ÏÔÊ¾»ù±¾Dialog
+    //æ˜¾ç¤ºåŸºæœ¬Dialog
     private void showSimpleDialog(View view) {
-        builder=new AlertDialog.Builder(this);
+
+        builder = new AlertDialog.Builder(this);
         builder.setIcon(R.mipmap.ic_launcher);
         builder.setTitle(R.string.simple_dialog);
         builder.setMessage(R.string.dialog_message);
 
-        //¼àÌıÏÂ·½buttonµã»÷ÊÂ¼ş
+        //ç›‘å¬ä¸‹æ–¹buttonç‚¹å‡»äº‹ä»¶
         builder.setPositiveButton(R.string.postive_button, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(getApplicationContext(),R.string.toast_postive,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.toast_postive, Toast.LENGTH_SHORT).show();
             }
         });
         builder.setNegativeButton(R.string.negative_button, new DialogInterface.OnClickListener() {
@@ -104,115 +85,132 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             }
         });
 
-        //ÉèÖÃ¶Ô»°¿òÊÇ¿ÉÈ¡ÏûµÄ
-        builder.setCancelable(true);
-        AlertDialog dialog=builder.create();
-        dialog.show();
+        //è®¾ç½®å¯¹è¯æ¡†æ˜¯å¯å–æ¶ˆçš„
+        builder.setCancelable(false);
+        builder.create().show();
     }
 
 
     private void showSimpleListDialog(View view) {
-        builder=new AlertDialog.Builder(this);
+        builder = new AlertDialog.Builder(this);
         builder.setIcon(R.mipmap.ic_launcher);
         builder.setTitle(R.string.simple_list_dialog);
 
         /**
-         * ÉèÖÃÄÚÈİÇøÓòÎª¼òµ¥ÁĞ±íÏî
+         * è®¾ç½®å†…å®¹åŒºåŸŸä¸ºç®€å•åˆ—è¡¨é¡¹
          */
-        final String[] Items={"Items_one","Items_two","Items_three"};
+        final String[] Items = {"Items_one", "Items_two", "Items_three"};
         builder.setItems(Items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(getApplicationContext(), "You clicked "+Items[i], Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "You clicked " + Items[i], Toast.LENGTH_SHORT).show();
             }
         });
         builder.setCancelable(true);
-        AlertDialog dialog=builder.create();
-        dialog.show();
+        builder.create().show();
     }
 
     private void showSingleChoiceDialog(View view) {
-        builder=new AlertDialog.Builder(this);
+        builder = new AlertDialog.Builder(this);
         builder.setIcon(R.mipmap.ic_launcher);
         builder.setTitle(R.string.single_choice_dialog);
 
         /**
-         * ÉèÖÃÄÚÈİÇøÓòÎªµ¥Ñ¡ÁĞ±íÏî
+         * è®¾ç½®å†…å®¹åŒºåŸŸä¸ºå•é€‰åˆ—è¡¨é¡¹
          */
-        final String[] items={"Items_one","Items_two","Items_three"};
+        final String[] items = {"Items_one", "Items_two", "Items_three"};
         builder.setSingleChoiceItems(items, 1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(getApplicationContext(), "You clicked "+items[i], Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "You clicked " + items[i], Toast.LENGTH_SHORT).show();
             }
         });
 
         builder.setCancelable(true);
-        AlertDialog dialog=builder.create();
-        dialog.show();
+        builder.create().show();
     }
+
     private void showMultiChoiceDialog(View view) {
-        builder=new AlertDialog.Builder(this);
+        builder = new AlertDialog.Builder(this);
         builder.setIcon(R.mipmap.ic_launcher);
         builder.setTitle(R.string.simple_list_dialog);
 
         /**
-         * ÉèÖÃÄÚÈİÇøÓòÎª¶àÑ¡ÁĞ±íÏî
+         * è®¾ç½®å†…å®¹åŒºåŸŸä¸ºå¤šé€‰åˆ—è¡¨é¡¹
          */
-        final String[] items={"Items_one","Items_two","Items_three"};
+        final String[] items = {"Items_one", "Items_two", "Items_three"};
         builder.setMultiChoiceItems(items, new boolean[]{true, false, true}, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i, boolean b) {
-                Toast.makeText(getApplicationContext(),"You clicked "+items[i]+" "+b,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "You clicked " + items[i] + " " + b, Toast.LENGTH_SHORT).show();
             }
         });
 
-
         builder.setCancelable(true);
-        AlertDialog dialog=builder.create();
-        dialog.show();
+        builder.create().show();
 
     }
-    private void showCustomAdapterDialog(View view){
 
-        builder=new AlertDialog.Builder(this);
+    private void showCustomAdapterDialog(View view) {
+
+        builder = new AlertDialog.Builder(this);
         builder.setIcon(R.mipmap.ic_launcher);
         builder.setTitle(R.string.custom_adapter_dialog);
 
         /**
-         * ÉèÖÃÄÚÈİÇøÓòÎª×Ô¶¨Òåadapter
+         * è®¾ç½®å†…å®¹åŒºåŸŸä¸ºè‡ªå®šä¹‰adapter
          */
-        List<ItemBean> items=new ArrayList<>();
-        items.add(new ItemBean(R.mipmap.icon,"You can call me xiaoming"));
+        List<ItemBean> items = new ArrayList<>();
+        items.add(new ItemBean(R.mipmap.icon, "You can call me xiaoming"));
         items.add(new ItemBean(R.mipmap.ic_launcher, "I'm android xiao"));
-        CustomAdapter adapter=new CustomAdapter(items,getApplicationContext());
+        CustomAdapter adapter = new CustomAdapter(items, getApplicationContext());
         builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(getApplicationContext(),"You clicked"+i,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "You clicked" + i, Toast.LENGTH_SHORT).show();
             }
         });
 
         builder.setCancelable(true);
-        AlertDialog dialog=builder.create();
-        dialog.show();
+        builder.create().show();
 
     }
 
-    private void showCustomViewDialog(View view){
-        builder=new AlertDialog.Builder(this);
+    private void showCustomViewDialog(View view) {
+        builder = new AlertDialog.Builder(this);
         builder.setIcon(R.mipmap.ic_launcher);
         builder.setTitle(R.string.custom_view_dialog);
 
         /**
-         * ÉèÖÃÄÚÈİÇøÓòÎª×Ô¶¨ÒåView
+         * è®¾ç½®å†…å®¹åŒºåŸŸä¸ºè‡ªå®šä¹‰View
          */
-        LinearLayout loginDialog= (LinearLayout) getLayoutInflater().inflate(R.layout.custom_view,null);
-        builder.setView(loginDialog);
+        View v = getLayoutInflater().inflate(R.layout.custom_view, null);
+        builder.setView(v);
+//        builder.setCancelable(true);
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.show();
 
-        builder.setCancelable(true);
-        AlertDialog dialog=builder.create();
-        dialog.show();
+        final TextView user = (TextView)v.findViewById(R.id.vUser);
+        v.findViewById(R.id.mOk).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                String u = user.getText().toString();
+                if(u != null && u.trim().length() > 0) {
+                    alertDialog.dismiss();
+                }
+
+                Toast.makeText(getApplicationContext(), u, Toast.LENGTH_SHORT).show();
+            }
+        });
+        //ç›‘å¬ä¸‹æ–¹buttonç‚¹å‡»äº‹ä»¶
+//        builder.setPositiveButton(R.string.postive_button, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                Toast.makeText(getApplicationContext(), R.string.toast_postive, Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
+
     }
 
     private class CustomAdapter extends BaseAdapter {
@@ -226,7 +224,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             this.items = items;
             this.inflater = LayoutInflater.from(context);
         }
-
 
 
         @Override
@@ -246,10 +243,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            if(view==null){
-                view=inflater.inflate(R.layout.custom_adapter,null);
-                image= (ImageView) view.findViewById(R.id.id_image);
-                text= (TextView) view.findViewById(R.id.id_text);
+            if (view == null) {
+                view = inflater.inflate(R.layout.custom_adapter, null);
+                image = (ImageView) view.findViewById(R.id.id_image);
+                text = (TextView) view.findViewById(R.id.id_text);
             }
             image.setImageResource(items.get(i).getImageId());
             text.setText(items.get(i).getMessage());
@@ -258,7 +255,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     }
 
 
-    private class ItemBean{
+    private class ItemBean {
         private int imageId;
         private String message;
 
@@ -283,6 +280,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             this.message = message;
         }
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -290,6 +288,4 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         return true;
     }
 
-
-   
 }
